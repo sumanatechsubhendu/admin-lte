@@ -15,9 +15,15 @@
             <!-- Loop through users and display data -->
             <tr v-for="user in users" :key="user.id">
                 <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.status }}</td>
+                <td>
+                    <!-- Display active icon when isActive is true -->
+                    <i v-if="user.status" class="fas fa-check-circle color-green"></i>
+
+                    <!-- Display inactive icon when isActive is false -->
+                    <i v-else class="fas fa-times-circle"></i>
+                </td>
                 <td>
                     <a :href="'/users/' + user.id + '/edit'" class="btn btn-warning btn-sm">
                     <i class="fas fa-pencil" title="Edit"></i>
