@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles, HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +19,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'status',
+        'role_id'
     ];
 
     /**
@@ -38,7 +42,42 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    //     'password' => 'hashed',
+    // ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role->name === $role;
+    }
+
+    public function authorizeRoles($roles)
+    {
+      if ($this->hasAnyRole($roles)) {
+        return true;
+      }
+      abort(401, 'This action is unauthorized.');
+    }
+
+    public function hasAnyRole($roles)
+    {
+      if (is_array($roles)) {
+        foreach ($roles as $role) {
+          if ($this->hasRole($role)) {
+            return true;
+          }
+        }
+      } else {
+        if ($this->hasRole($roles)) {
+          return true;
+        }
+      }
+      return false;
+    }
 }
