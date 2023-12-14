@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ use Inertia\Inertia;
 Route::resource('users', UserController::class);
 Route::resource('posts', PostController::class);
 Route::resource('listing', ListingController::class);
+Route::post('/user-list', [UserController::class, 'getUserList']);
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
