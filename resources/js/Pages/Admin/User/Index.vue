@@ -89,6 +89,15 @@ export default {
                 console.error('Error fetching data from API', error);
             }
         },
+        destroy(id) {
+            // Ask for confirmation
+            const isConfirmed = window.confirm("Are you sure you want to delete this post?");
+
+            // If user confirms, proceed with deletion
+            if (isConfirmed) {
+                this.$inertia.delete(route("users.destroy", id));
+            }
+        },
         drawTable(role_id, start_date, end_date) {
             const apiUrl = this.baseUrl+'/user-list';
             $('#table1').hide();
@@ -133,6 +142,7 @@ export default {
                         $(".dataTables_paginate .pagination li a").addClass("page-link");
                         $(".dataTables_paginate .pagination li a:first").html('<span aria-hidden="true">«</span>');
                         $(".dataTables_paginate .pagination li a:last").html('<span aria-hidden="true">»</span>');
+
                     },
                 },
                 'columns': [

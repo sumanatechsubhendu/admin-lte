@@ -34,14 +34,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function getList(Request $request)
-    {
-        $input = $request->all();
-        $ds = new DashboardService();
-        $response = $ds->getAjaxUserList($input);
-        echo json_encode($response);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -120,14 +112,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(User $user)
     {
-        $post->delete();
+        $user->delete();
 
-        return Redirect::route('posts.index');
+        return Redirect::route('users.index');
     }
 
     public function getUserList(Request $request)
@@ -210,9 +202,8 @@ class UserController extends Controller
             $editButton = '<a href="' . $editUrl . '" class="btn btn-warning btn-sm">
                 <i class="fas fa-pencil" title="Edit"></i>
             </a>&nbsp;';
-
             // Delete button
-            $deleteButton = '<button onclick="deleteUser(' . $user->id . ')" class="btn btn-danger btn-sm">
+            $deleteButton = '<button @click="destroy(' . $user->id . ')" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash" title="Delete"></i>
             </button>';
 
