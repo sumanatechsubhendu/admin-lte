@@ -22,14 +22,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //$users = User::latest()->paginate(10);
-       //dd($users);
-        $users = User::all();
-        //dd($users->items());
         $token = csrf_token();
 
         return Inertia::render('Admin/User/Index', [
-            'users' => $users,
             'token' => $token
         ]);
     }

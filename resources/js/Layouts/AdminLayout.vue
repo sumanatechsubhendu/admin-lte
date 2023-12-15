@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/inertia-vue3'
+import BreezeDropdownLink from '@/Components/DropdownLink.vue';
 </script>
 
 <template>
@@ -17,6 +17,11 @@ import { Link } from '@inertiajs/inertia-vue3'
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a :href="route('users.index')" :active="route().current('users.index')" class="nav-link">Users</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <BreezeDropdownLink :href="route('logout')" method="post" as="button">
+                        Log Out
+                    </BreezeDropdownLink>
                 </li>
 
             </ul>
@@ -56,7 +61,8 @@ import { Link } from '@inertiajs/inertia-vue3'
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ this.baseUrl }}/dist/img/user1-128x128.jpg" alt="User Avatar"
+                                <img :src="`${this.baseUrl}/admin-lte/dist/img/user1-128x128.jpg`"
+                                 alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -73,7 +79,8 @@ import { Link } from '@inertiajs/inertia-vue3'
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ this.baseUrl }}/dist/img/user8-128x128.jpg" alt="User Avatar"
+                                <img :src="`${this.baseUrl}/admin-lte/dist/img/user8-128x128.jpg`"
+                                alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -90,7 +97,8 @@ import { Link } from '@inertiajs/inertia-vue3'
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ this.baseUrl }}/dist/img/user3-128x128.jpg" alt="User Avatar"
+                                <img :src="`${this.baseUrl}/admin-lte/dist/img/user3-128x128.jpg`"
+                                alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -151,10 +159,10 @@ import { Link } from '@inertiajs/inertia-vue3'
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ this.baseUrl }}/{{ this.baseUrl }}/index3.html" class="brand-link elevation-4">
-                <img src="{{ this.baseUrl }}/{{ this.baseUrl }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            <a href="{{ this.baseUrl }}/index3.html" class="brand-link elevation-4">
+                <img :src="`${this.baseUrl}/admin-lte/dist/img/AdminLTELogo.png`" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">Admin Panel</span>
             </a>
 
             <!-- Sidebar -->
@@ -162,10 +170,10 @@ import { Link } from '@inertiajs/inertia-vue3'
                 <!-- Sidebar user (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ this.baseUrl }}/{{ this.baseUrl }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img :src="`${this.baseUrl}/admin-lte/dist/img/user2-160x160.jpg`" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">{{ $page.props.auth.user.first_name }} {{ $page.props.auth.user.last_name }}</a>
                     </div>
                 </div>
 

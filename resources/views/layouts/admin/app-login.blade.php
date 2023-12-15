@@ -4,7 +4,7 @@
     <!-- Include your common head elements (meta tags, stylesheets, etc.) -->
     @include('layouts.admin.partials.head')
 </head>
-<body class="hold-transition login-page">
+<body class="{{ auth()->check() ? 'hold-transition sidebar-mini layout-fixed' : 'hold-transition login-page' }}">
     <!-- Content specific to login page -->
     @inertia
     <!-- Include your common scripts (JavaScript, etc.) -->

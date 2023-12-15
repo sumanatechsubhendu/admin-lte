@@ -17,7 +17,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('users', UserController::class);
+Route::prefix('webpanel')->group(function () {
+    Route::resource('users', UserController::class);
+});
 Route::resource('posts', PostController::class);
 Route::resource('listing', ListingController::class);
 Route::post('/user-list', [UserController::class, 'getUserList']);

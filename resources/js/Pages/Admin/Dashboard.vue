@@ -11,12 +11,14 @@ import { Head } from '@inertiajs/inertia-vue3';
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Fixed Navbar Layout</h1>
+                            <h1>Welcome in Homepage!</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a :href="route('webpanel.dashboard')" :active="route().current('webpanel.dashboard')">Home</a></li>
-                                <li class="breadcrumb-item"><a :href="route('users.index')" :active="route().current('users.index')">Users</a></li>
+                                <li class="breadcrumb-item"><a :href="route('webpanel.dashboard')"
+                                        :active="route().current('webpanel.dashboard')">Home</a></li>
+                                <li class="breadcrumb-item"><a :href="route('users.index')"
+                                        :active="route().current('users.index')">Users</a></li>
                                 <!-- <li class="breadcrumb-item active">Fixed Navbar Layout</li> -->
                             </ol>
                         </div>
@@ -45,7 +47,10 @@ import { Head } from '@inertiajs/inertia-vue3';
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    Start creating your amazing application!
+                                    Welcome! <b>{{ $page.props.auth.user.first_name }} {{ $page.props.auth.user.last_name
+                                    }}</b>
+                                    <br />You are login as a <b>{{ $page.props.auth.role.name }}</b>
+                                    <br />Your Email Id is <b>{{ $page.props.auth.user.email }}</b>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
@@ -60,5 +65,4 @@ import { Head } from '@inertiajs/inertia-vue3';
             </section>
             <!-- /.content -->
         </div>
-    </BreezeAuthenticatedLayout>
-</template>
+    </BreezeAuthenticatedLayout></template>

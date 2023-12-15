@@ -1,7 +1,7 @@
 <!-- Common head elements (meta tags, stylesheets, etc.) -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AdminLTE 3 | Log in</title>
+<title>{{ config('app.name', 'Laravel') }}</title>
 <!-- Include your stylesheets -->
 {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
 <!-- Scripts -->

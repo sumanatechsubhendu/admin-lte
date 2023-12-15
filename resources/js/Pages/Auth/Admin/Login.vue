@@ -96,7 +96,9 @@ const submit = () => {
                     <!-- <a href="forgot-password.html">I forgot my password</a> -->
                 </p>
                 <p class="mb-0">
-                    <a href="register.html" class="text-center">Register a new membership</a>
+                    <Link v-if="canResetPassword" :href="route('register')" class="text-center underline text-sm text-gray-600 hover:text-gray-900">
+                        Register a new membership
+                    </Link>
                 </p>
             </div>
             <!-- /.login-card-body -->
