@@ -13,7 +13,17 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+   // protected $rootView = 'app';
+    protected $rootView = 'layouts.admin.app-login';
+
+    // public function rootView(Request $request)
+    // {
+    //     if (strstr($request->route()->uri, 'webpanel/')) {
+    //         return 'layouts.admin.app-login';
+    //     }
+
+    //     return parent::rootView($request);
+    // }
 
     /**
      * Determine the current asset version.
@@ -36,7 +46,8 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ?? null,
+                'role' => $request->user()->role ?? null,
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
