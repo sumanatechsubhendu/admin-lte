@@ -30,12 +30,12 @@ const showingNavigationDropdown = ref(false);
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('listing.index')" :active="route().current('listing.index')">
+                                <!-- <BreezeNavLink :href="route('listing.index')" :active="route().current('listing.index')">
                                     Listing
                                 </BreezeNavLink>
                                 <BreezeNavLink :href="route('posts.index')" :active="route().current('posts.index')">
                                     Post
-                                </BreezeNavLink>
+                                </BreezeNavLink> -->
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     User
                                 </BreezeNavLink>
@@ -83,7 +83,7 @@ const showingNavigationDropdown = ref(false);
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Dashboard {{ $page.props.auth.user.name }}
                         </BreezeResponsiveNavLink>
                     </div>
 

@@ -15,6 +15,15 @@ class HandleInertiaRequests extends Middleware
      */
     protected $rootView = 'app';
 
+    public function rootView(Request $request)
+    {
+        if (strstr($request->route()->uri, 'webpanel/')) {
+            return 'layouts.admin.app-login';
+        }
+
+        return parent::rootView($request);
+    }
+
     /**
      * Determine the current asset version.
      *

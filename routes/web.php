@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +32,17 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    if (Auth::user()->role->name == "Admin") {
+        return Inertia::render('Admin/Dashboard');
+    }
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/webpanel/dashboard', function () {
+    if (Auth::user()->role->name == "Admin") {
+        return Inertia::render('Admin/Dashboard');
+    }
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('webpanel.dashboard');
 
 require __DIR__.'/auth.php';
