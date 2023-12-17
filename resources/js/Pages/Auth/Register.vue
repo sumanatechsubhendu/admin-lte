@@ -6,14 +6,17 @@ import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
+const props = defineProps({
+    roleList: Object,
+})
 const form = useForm({
     first_name: '',
     last_name: '',
     email: '',
     password: '',
     password_confirmation: '',
-    role_id: null,
-    status: null
+    role_id: '',
+    status: '0'
 });
 
 const submit = () => {
@@ -28,7 +31,6 @@ const submit = () => {
         <Head title="Register" />
 
         <BreezeValidationErrors class="mb-4" />
-
         <form @submit.prevent="submit">
             <div>
                 <BreezeLabel for="first_name" value="First Name" />
@@ -53,6 +55,24 @@ const submit = () => {
             <div class="mt-4">
                 <BreezeLabel for="password_confirmation" value="Confirm Password" />
                 <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
+            </div>
+
+            <div class="mt-4">
+                <BreezeLabel for="status" value="Status" />
+                <select id="status" v-model="form.status" class="mt-1 block w-full" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
+                <BreezeLabel for="role_id" value="Role" />
+                <select id="role_id" v-model="form.role_id" class="mt-1 block w-full" required>
+                    <option value="" disabled>Select Role</option>
+                    <option v-for="(role, roleId) in props.roleList" :key="roleId" :value="roleId">
+                        {{ role }}
+                    </option>
+                </select>
             </div>
 
             <div class="flex items-center justify-end mt-4">
