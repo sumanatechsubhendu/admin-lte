@@ -15,7 +15,8 @@ defineProps({
 const form = useForm({
     email: '',
     password: '',
-    remember: false
+    remember: false,
+    loginType: 'Admin'
 });
 
 const submit = () => {
@@ -34,7 +35,9 @@ const submit = () => {
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-
+                <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                    {{ status }}
+                </div>
                 <form @submit.prevent="submit">
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email" id="email"
