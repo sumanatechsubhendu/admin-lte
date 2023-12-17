@@ -17,12 +17,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::prefix('webpanel')->group(function () {
-    Route::resource('users', UserController::class);
-});
-Route::resource('posts', PostController::class);
-Route::resource('listing', ListingController::class);
-Route::post('/user-list', [UserController::class, 'getUserList']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -33,18 +27,29 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    if (Auth::user()->role->name == "Admin") {
-        return Inertia::render('Admin/Dashboard');
-    }
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        if (Auth::user()->role->name == "Admin") {
+            return Inertia::render('Admin/Dashboard');
+        }
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::get('/webpanel/dashboard', function () {
-    if (Auth::user()->role->name == "Admin") {
-        return Inertia::render('Admin/Dashboard');
-    }
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('webpanel.dashboard');
+    Route::get('/webpanel/dashboard', function () {
+        if (Auth::user()->role->name == "Admin") {
+            return Inertia::render('Admin/Dashboard');
+        }
+        return Inertia::render('Dashboard');
+    })->name('webpanel.dashboard');
+
+    Route::prefix('webpanel')->group(function () {
+        Route::resource('users', UserController::class);
+    });
+    Route::resource('posts', PostController::class);
+    Route::resource('listing', ListingController::class);
+    Route::post('/user-list', [UserController::class, 'getUserList']);
+
+});
+
 
 require __DIR__.'/auth.php';
