@@ -1,5 +1,5 @@
 <!-- Common scripts (JavaScript, etc.) -->
-<script src="{{ mix('js/app.js') }}" defer></script>
+{{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 
 <!-- Add these lines to include AdminLTE JS and jQuery -->
 <script src="{{ asset('admin-lte/plugins/jquery/jquery.min.js') }}"></script>

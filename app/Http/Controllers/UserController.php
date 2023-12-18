@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Repo\CommonService;
 use App\Repo\UserService;
+use Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('User/Create');
+        $useService = new CommonService();
+        $roleList = $useService->getRolesList();
+        return Inertia::render('Admin/User/AddUser', [
+            'roleList' => $roleList
+        ]);
     }
 
     /**
@@ -45,13 +50,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create(
-            Request::validate([
-                'title' => ['required', 'max:90'],
-                'description' => ['required'],
-            ])
-        );
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role_id' => 'required',
+        ]);
 
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'status' => isset($request->status) ? $request->status : true,
+            'role_id' => isset($request->role_id) ? $request->role_id : 1,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
         return Redirect::route('users.index');
     }
 

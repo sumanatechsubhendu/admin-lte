@@ -1,28 +1,28 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/AdminLayout.vue';
 import BreezeButton from '@/Components/Button.vue';
-import BreezeGuestLayout from '@/Layouts/Guest.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     roleList: Object,
-    user: Object,
-    status: String,
 })
 const form = useForm({
-    first_name: props.user.first_name,
-    last_name: props.user.last_name,
-    email: props.user.email,
+    first_name: '',
+    last_name: '',
+    email: '',
     password: '',
     password_confirmation: '',
-    role_id: props.user.role_id,
-    status: props.user.status
+    role_id: '',
+    status: '0'
 });
 
-const update = () => form.put(route('users.update', { user: props.user.id }))
+const create = () => {
+    form.post(route('users.store'), {
+        onFinish: () => form.reset('password', 'password_confirmation'),
+    });
+};
 </script>
 
 <template>
@@ -36,7 +36,7 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Edit Users</h1>
+                            <h1>Add User</h1>
                         </div>
                         <!-- <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -63,30 +63,35 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
                                     </div>
                                 </div>
                                 <div class="card-body" id="table1">
-                                    <form @submit.prevent="update">
+                                    <form @submit.prevent="create">
                                         <div>
                                             <BreezeLabel for="first_name" value="First Name" />
                                             <BreezeInput id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.first_name">{{ form.errors.first_name }}</div>
                                         </div>
 
                                         <div>
                                             <BreezeLabel for="last_name" value="Last Name" />
                                             <BreezeInput id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.last_name">{{ form.errors.last_name }}</div>
                                         </div>
 
                                         <div class="mt-4">
                                             <BreezeLabel for="email" value="Email" />
                                             <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autocomplete="username" />
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.email">{{ form.errors.email }}</div>
                                         </div>
 
                                         <div class="mt-4">
                                             <BreezeLabel for="password" value="Password" />
                                             <BreezeInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" autocomplete="new-password" />
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.password">{{ form.errors.password }}</div>
                                         </div>
 
                                         <div class="mt-4">
                                             <BreezeLabel for="password_confirmation" value="Confirm Password" />
                                             <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" autocomplete="new-password" />
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</div>
                                         </div>
 
                                         <div class="mt-4">
@@ -95,6 +100,7 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
                                                 <option value="1">Active</option>
                                                 <option value="0">Inactive</option>
                                             </select>
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.status">{{ form.errors.status }}</div>
                                         </div>
 
                                         <div class="mt-4">
@@ -109,7 +115,7 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
 
                                         <div class="flex items-center justify-end mt-4">
                                             <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                                Update
+                                                Add
                                             </BreezeButton>
                                         </div>
                                     </form>

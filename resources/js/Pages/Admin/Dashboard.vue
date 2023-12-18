@@ -13,15 +13,6 @@ import { Head } from '@inertiajs/inertia-vue3';
                         <div class="col-sm-6">
                             <h1>Welcome in Homepage!</h1>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a :href="route('webpanel.dashboard')"
-                                        :active="route().current('webpanel.dashboard')">Home</a></li>
-                                <li class="breadcrumb-item"><a :href="route('users.index')"
-                                        :active="route().current('users.index')">Users</a></li>
-                                <!-- <li class="breadcrumb-item active">Fixed Navbar Layout</li> -->
-                            </ol>
-                        </div>
                     </div>
                 </div><!-- /.container-fluid -->
             </section>

@@ -32,7 +32,7 @@ const submit = () => {
 
         <BreezeValidationErrors class="mb-4" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm text-red-600">
             {{ status }}
         </div>
 
