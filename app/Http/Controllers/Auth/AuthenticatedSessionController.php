@@ -45,9 +45,9 @@ class AuthenticatedSessionController extends Controller
 
             // If you want to redirect the user after logout, you can do something like this:
             if ($role == "Admin") {
-                return redirect('/login')->with('status', 'Account is In Active.');
+                return redirect('/login')->with('status', 'Account is inactive. Please contact support for assistance.');
             } else {
-                return redirect()->intended('/webpanel/login')->with('status', 'Account is In Active.');
+                return redirect()->intended('/webpanel/login')->with('status', 'Account is inactive. Please contact support for assistance.');
             }
         }
         if (Auth::user()->role->name == "Admin" && $request->loginType== "Admin") {
