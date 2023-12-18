@@ -33,7 +33,10 @@ import { Link } from "@inertiajs/inertia-vue3";
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">List of all users</h3>
+                                    <h3 class="card-title">List of all users {{ status }}</h3>
+                                    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                                        {{ status }}
+                                    </div>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body" id="table1">
@@ -76,7 +79,8 @@ import $ from 'jquery';
 export default {
     props: {
         users: Array,
-        token: String
+        token: String,
+        status: String,
     },
     data() {
         return {
