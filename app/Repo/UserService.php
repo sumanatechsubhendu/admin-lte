@@ -67,9 +67,13 @@ class UserService extends CommonService
         foreach ($results as $key => $user) {
 
             if ($user->status == "0") {
-                $status = "<i class=\"fas fa-check-circle color-green\"></i>";
+                //$status = "<i class=\"fas fa-times-circle color-green\"></i>";
+                $status = "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\">
+                Active</button>";
             } else if ($user->status == '1') {
-                $status = "<i class=\"fas fa-times-circle color-green\"></i>";
+                //$status = "<i class=\"fas fa-check-circle color-green\"></i>";
+                $status = "<button type=\"button\" class=\"btn btn-block btn-danger btn-sm\">
+                In Active</button>";
             }
 
 

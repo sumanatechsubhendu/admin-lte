@@ -1,6 +1,7 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from "@inertiajs/inertia-vue3";
+import BreezeButton from '@/Components/Button.vue';
 import { Link } from "@inertiajs/inertia-vue3";
 </script>
 <template>
@@ -16,12 +17,15 @@ import { Link } from "@inertiajs/inertia-vue3";
                         <div class="col-sm-6">
                             <h1>Users</h1>
                         </div>
-                        <!-- <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
+                        <div class="col-sm-6 d-flex justify-content-end">
+                            <BreezeButton class="ml-4" @click="create">
+                                Add User
+                            </BreezeButton>
+                            <!-- <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item active">Users</li>
-                            </ol>
-                        </div> -->
+                            </ol> -->
+                        </div>
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
@@ -104,6 +108,10 @@ export default {
             } catch (error) {
                 console.error('Error fetching data from API', error);
             }
+        },
+        create() {
+            const addUserUrl = this.baseUrl + '/webpanel/users/create';
+            window.location.href = addUserUrl;
         },
         destroy(id) {
             // Ask for confirmation
