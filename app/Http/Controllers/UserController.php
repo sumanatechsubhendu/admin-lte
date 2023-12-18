@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\User;
+use App\Repo\CommonService;
 use App\Repo\UserService;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -32,7 +34,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Post/Create');
+        return Inertia::render('User/Create');
     }
 
     /**
@@ -43,23 +45,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create(
+        User::create(
             Request::validate([
                 'title' => ['required', 'max:90'],
                 'description' => ['required'],
             ])
         );
 
-        return Redirect::route('posts.index');
+        return Redirect::route('users.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(User $user)
     {
         //
     }
@@ -67,17 +69,16 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(User $user)
     {
-        return Inertia::render('Post/Edit', [
-            'post' => [
-                'id' => $post->id,
-                'title' => $post->title,
-                'description' => $post->description
-            ]
+        $useService = new CommonService();
+        $roleList = $useService->getRolesList();
+        return Inertia::render('Admin/User/EditUser', [
+            'user' => $user,
+            'roleList' => $roleList
         ]);
     }
 
@@ -85,25 +86,37 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, User $user)
     {
-        $data = Request::validate([
-                'title' => ['required', 'max:90'],
-                'description' => ['required'],
-            ]);
-        $post->update($data);
+       // 'password' => ['sometimes', 'required', 'confirmed', Rules\Password::defaults()],
+        $user->update(
+            $request->validate([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    Rule::unique('users')->ignore($user->id),
+                ],
+                'role_id' => 'required',
+                'status' => 'required',
+            ])
+        );
 
 
-        return Redirect::route('posts.index');
+        return redirect()->route('users.index')
+            ->with('success', 'user was updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
@@ -111,6 +124,20 @@ class UserController extends Controller
         $user->delete();
 
         return Redirect::route('users.index');
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteUser(User $user)
+    {
+        $user->delete();
+
+        return Redirect::route('users.index')->with('status', 'User deleted successfully.');
     }
 
     public function getUserList(Request $request)

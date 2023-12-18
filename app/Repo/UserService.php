@@ -74,17 +74,20 @@ class UserService extends CommonService
 
 
             $full_name = $user->first_name . ' ' . $user->last_name;
-            // $link = route('viewMyBsTeamDeatails', Helpers::encrypt_decrypt($user->id));
-            //$full_name = "<a class=\"text-blue-500 hover:text-blue-300\" href=\"$link\" target=\"_blank\"> $full_name</a>";
-            //$editUrl = route('users.edit', ['id' => $user->id]);
-            $editUrl = '';
+
+
+            $editUrl = route('users.edit', [$user->id]);
             $editButton = '<a href="' . $editUrl . '" class="btn btn-warning btn-sm">
                 <i class="fas fa-pencil" title="Edit"></i>
             </a>&nbsp;';
             // Delete button
-            $deleteButton = '<button @click="destroy(' . $user->id . ')" class="btn btn-danger btn-sm">
+            /*$deleteButton = '<button @click="destroy(' . $user->id . ')" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash" title="Delete"></i>
-            </button>';
+            </button>';*/
+            $deleteUrl = route('delete-user', [$user->id]);
+            $deleteButton = '<a href="' . $deleteUrl . '" class="btn btn-danger btn-sm"><button class="btn btn-danger btn-sm">
+                <i class="fas fa-trash" title="Delete"></i>
+            </button></a>';
 
             // Output
             $action = $editButton . $deleteButton;
