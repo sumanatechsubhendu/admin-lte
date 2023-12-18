@@ -70,10 +70,10 @@ class UserService extends CommonService
                 //$status = "<i class=\"fas fa-times-circle color-green\"></i>";
                 $status = "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\">
                 Active</button>";
+                $status = "<span class=\"badge badge-primary\">Active</span>";
             } else {
                 //$status = "<i class=\"fas fa-check-circle color-green\"></i>";
-                $status = "<button type=\"button\" class=\"btn btn-block btn-danger btn-sm\">
-                In Active</button>";
+                $status = "<span class=\"badge badge-warning\">In Active</span>";
             }
 
 
@@ -89,7 +89,7 @@ class UserService extends CommonService
                 <i class="fas fa-trash" title="Delete"></i>
             </button>';*/
             $deleteUrl = route('delete-user', [$user->id]);
-            $deleteButton = '<a href="' . $deleteUrl . '" class="btn btn-danger btn-sm"><button class="btn btn-danger btn-sm">
+            $deleteButton = '<a href="' . $deleteUrl . '"><button class="btn btn-danger btn-sm">
                 <i class="fas fa-trash" title="Delete"></i>
             </button></a>';
 
