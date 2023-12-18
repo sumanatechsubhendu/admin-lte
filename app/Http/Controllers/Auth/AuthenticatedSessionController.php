@@ -39,6 +39,17 @@ class AuthenticatedSessionController extends Controller
         // if (Auth::user()->role->name == "Admin") {
         //     return redirect()->intended('/webpanel/users');
         // }
+        if (!Auth::user()->status) {
+            $role = Auth::user()->role->name;
+            Auth::logout();
+
+            // If you want to redirect the user after logout, you can do something like this:
+            if ($role == "Admin") {
+                return redirect('/login')->with('status', 'Account is In Active.');
+            } else {
+                return redirect()->intended('/webpanel/login')->with('status', 'Account is In Active.');
+            }
+        }
         if (Auth::user()->role->name == "Admin" && $request->loginType== "Admin") {
             return redirect()->intended(RouteServiceProvider::HOME);
         } else if (Auth::user()->role->name == "User" && $request->loginType== "User") {
