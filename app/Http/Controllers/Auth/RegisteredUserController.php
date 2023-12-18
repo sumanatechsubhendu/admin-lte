@@ -44,14 +44,13 @@ class RegisteredUserController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role_id' => 'required',
         ]);
 
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'status' => isset($request->status) ? $request->status : true,
-            'role_id' => isset($request->role_id) ? $request->role_id : 1,
+            'role_id' => isset($request->role_id) ? $request->role_id : 2,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
