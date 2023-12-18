@@ -72,8 +72,8 @@ const submit = () => {
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                Log in
+                            <BreezeButton class="ml-1 lowercase" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                                Log In
                             </BreezeButton>
                             <!-- <button type="submit" class="btn btn-primary btn-block">Sign In</button> -->
                         </div>
@@ -81,7 +81,7 @@ const submit = () => {
                     </div>
                 </form>
 
-                <div class="social-auth-links text-center mb-3">
+                <!-- <div class="social-auth-links text-center mb-3">
                     <p>- OR -</p>
                     <a href="#" class="btn btn-block btn-primary">
                         <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
@@ -89,7 +89,7 @@ const submit = () => {
                     <a href="#" class="btn btn-block btn-danger">
                         <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                     </a>
-                </div>
+                </div> -->
                 <!-- /.social-auth-links -->
 
                 <p class="mb-1">
@@ -98,11 +98,11 @@ const submit = () => {
                     </Link>
                     <!-- <a href="forgot-password.html">I forgot my password</a> -->
                 </p>
-                <p class="mb-0">
+                <!-- <p class="mb-0">
                     <Link v-if="canResetPassword" :href="route('register')" class="text-center underline text-sm text-gray-600 hover:text-gray-900">
                         Register a new membership
                     </Link>
-                </p>
+                </p> -->
             </div>
             <!-- /.login-card-body -->
         </div>
