@@ -22,11 +22,6 @@ return new class extends Migration
             $table->boolean('status')
                 ->comment('0: Inactive, 1: Active')
                 ->default(false);
-            // Add the foreign key column
-            $table->unsignedBigInteger('role_id');
-
-            // Add the foreign key constraint
-            $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();
             $table->timestamps();
         });
