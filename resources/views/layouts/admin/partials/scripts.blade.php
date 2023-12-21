@@ -5,4 +5,6 @@
 <script src="{{ asset('admin-lte/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin-lte/dist/js/adminlte.min.js') }}"></script>
+<!-- Bootstrap Switch -->
+<script src="{{ asset('admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 
