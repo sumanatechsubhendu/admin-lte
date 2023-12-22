@@ -3,6 +3,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from "@inertiajs/inertia-vue3";
 import BreezeButton from '@/Components/Button.vue';
 import { Link } from "@inertiajs/inertia-vue3";
+import Swal from 'sweetalert2';
 </script>
 <template>
     <Head title="Dashboard" />
@@ -20,6 +21,9 @@ import { Link } from "@inertiajs/inertia-vue3";
                         <div class="col-sm-6 d-flex justify-content-end">
                             <BreezeButton class="ml-4" @click="create">
                                 Add User
+                            </BreezeButton>
+                            <BreezeButton class="ml-4" id="refreshBtn" @click="refresh">
+                                Refresh
                             </BreezeButton>
                             <!-- <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -44,6 +48,8 @@ import { Link } from "@inertiajs/inertia-vue3";
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body" id="table1">
+                                    <input type="hidden" name="baseUrl" id="baseUrl" v-model="baseUrl"/>
+                                    <input type="hidden" name="token" id="token" v-model="token"/>
                                     <table class="table table-bordered table-hover w-full" id="dataTable2">
                                         <thead>
                                             <tr>
@@ -113,6 +119,13 @@ export default {
             const addUserUrl = this.baseUrl + '/webpanel/users/create';
             window.location.href = addUserUrl;
         },
+        refresh() {
+            let role_id = null;
+            let start_date = null;
+            let end_date = null;
+            $('#dataTable2').DataTable().destroy();
+            this.drawTable(role_id, start_date, end_date);
+        },
         destroy(id) {
             // Ask for confirmation
             const isConfirmed = window.confirm("Are you sure you want to delete this post?");
@@ -157,8 +170,7 @@ export default {
                     beforeSend: function () {
                         $("#loaderDiv1").show();
                     },
-                    complete: function (data) {
-                        // $(".dataTables_filter").hide();
+                    complete: (data) => {
                         $("#loaderDiv1").hide();
                         $('#table1').show();
                         $('.table').resize();
@@ -166,7 +178,45 @@ export default {
                         $(".dataTables_paginate .pagination li a").addClass("page-link");
                         $(".dataTables_paginate .pagination li a:first").html('<span aria-hidden="true">«</span>');
                         $(".dataTables_paginate .pagination li a:last").html('<span aria-hidden="true">»</span>');
+                        $('.delete-btn').click(function() {
+                            var userId = $(this).data('id');
+                            var baseUrl = $("#baseUrl").val();
+                            var token = $("#token").val();
 
+                            // Ask for confirmation
+                            const isConfirmed = window.confirm("Are you sure you want to delete this post?");
+
+                            // If user confirms, proceed with deletion
+                            if (isConfirmed) {
+                               // const apiUrl = baseUrl + '/webpanel/delete-user/'+userId;
+                               // this.$inertia.delete(route("users.destroy", userId));
+                               const apiUrl = route("delete-user", userId);
+                                $.ajax({
+                                    url: apiUrl,
+                                    type: 'GET',
+                                    data: {
+                                        _token: token
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': token
+                                    },
+                                    success: function(response) {
+                                        if (response.status == "success") {
+                                            Swal.fire('Delete successful');
+                                        } else {
+                                            Swal.fire('user already deleted.');
+                                        }
+                                        $('#refreshBtn').click();
+                                    },
+                                    error: function(error) {
+                                        // Handle error response
+                                        console.error('Delete failed', error);
+                                        Swal.fire('Delete failed');
+                                    }
+                                });
+
+                            }
+                        });
                     },
                 },
                 'columns': [

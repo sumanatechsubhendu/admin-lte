@@ -149,9 +149,21 @@ class UserController extends Controller
      */
     public function deleteUser(User $user)
     {
-        $user->delete();
+        if ($user) {
+            $user->delete();
 
-        return Redirect::route('users.index')->with('status', 'User deleted successfully.');
+            //return Redirect::route('users.index')->with('status', 'User deleted successfully.');
+            return [
+                'status' => 'success',
+                'msg' => 'User deleted successfully.',
+            ];
+        } else {
+            return [
+                'status' => 'fail',
+                'msg' => 'User not deleted..',
+            ];
+        }
+
     }
 
     public function getUserList(Request $request)
