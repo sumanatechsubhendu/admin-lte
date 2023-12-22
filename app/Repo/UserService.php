@@ -85,13 +85,13 @@ class UserService extends CommonService
                 <i class="fas fa-pencil" title="Edit"></i>
             </a>&nbsp;';
             // Delete button
-            /*$deleteButton = '<button @click="destroy(' . $user->id . ')" class="btn btn-danger btn-sm">
+            $deleteButton = '<button data-id="' . $user->id . '" class="btn btn-danger btn-sm delete-btn">
                 <i class="fas fa-trash" title="Delete"></i>
-            </button>';*/
-            $deleteUrl = route('delete-user', [$user->id]);
+            </button>';
+           /* $deleteUrl = route('delete-user', [$user->id]);
             $deleteButton = '<a href="' . $deleteUrl . '"><button class="btn btn-danger btn-sm">
                 <i class="fas fa-trash" title="Delete"></i>
-            </button></a>';
+            </button></a>';*/
 
             // Output
             $action = $editButton . $deleteButton;
