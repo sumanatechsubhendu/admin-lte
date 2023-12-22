@@ -16,7 +16,7 @@ class RolesTableSeeder extends Seeder
     {
         // Insert 'admin' role
         DB::table('roles')->insert([
-            'name' => 'admin',
+            'name' => 'Admin',
             'guard_name' => 'web', // Assuming you're using the 'web' guard
             'created_at' => now(),
             'updated_at' => now(),
@@ -24,7 +24,7 @@ class RolesTableSeeder extends Seeder
 
         // Insert 'user' role
         DB::table('roles')->insert([
-            'name' => 'user',
+            'name' => 'User',
             'guard_name' => 'web', // Assuming you're using the 'web' guard
             'created_at' => now(),
             'updated_at' => now(),
