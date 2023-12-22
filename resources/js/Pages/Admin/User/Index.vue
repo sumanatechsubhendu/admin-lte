@@ -22,6 +22,9 @@ import Swal from 'sweetalert2';
                             <BreezeButton class="ml-4" @click="create">
                                 Add User
                             </BreezeButton>
+                            <BreezeButton class="ml-4" id="refreshBtn" @click="refresh">
+                                Refresh
+                            </BreezeButton>
                             <!-- <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item active">Users</li>
@@ -116,6 +119,13 @@ export default {
             const addUserUrl = this.baseUrl + '/webpanel/users/create';
             window.location.href = addUserUrl;
         },
+        refresh() {
+            let role_id = null;
+            let start_date = null;
+            let end_date = null;
+            $('#dataTable2').DataTable().destroy();
+            this.drawTable(role_id, start_date, end_date);
+        },
         destroy(id) {
             // Ask for confirmation
             const isConfirmed = window.confirm("Are you sure you want to delete this post?");
@@ -191,12 +201,12 @@ export default {
                                         'X-CSRF-TOKEN': token
                                     },
                                     success: function(response) {
-                                        console.log(response.status);
                                         if (response.status == "success") {
                                             Swal.fire('Delete successful');
                                         } else {
                                             Swal.fire('user already deleted.');
                                         }
+                                        $('#refreshBtn').click();
                                     },
                                     error: function(error) {
                                         // Handle error response
