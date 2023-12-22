@@ -57,6 +57,19 @@ class User extends Authenticatable
     //     return $this->role->name === $role;
     // }
 
+    /**
+     * Accessor to get the roles attribute for a user.
+     *
+     * @return string
+     */
+    public function getRoleAttribute()
+    {
+        // Assuming a user has only one role (change logic accordingly if multiple roles are possible)
+        $role = $this->roles->first();
+
+        return $role ? $role->name : 'No Role';
+    }
+
     public function authorizeRoles($roles)
     {
       if ($this->hasAnyRole($roles)) {

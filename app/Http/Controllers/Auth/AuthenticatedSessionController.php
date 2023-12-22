@@ -44,23 +44,23 @@ class AuthenticatedSessionController extends Controller
             Auth::logout();
 
             // If you want to redirect the user after logout, you can do something like this:
-            if ($role == "Admin") {
+            if (Auth::check() && Auth::user()->hasRole('Admin')) {
                 return redirect('/login')->with('status', 'Account is inactive. Please contact support for assistance.');
             } else {
                 return redirect()->intended('/webpanel/login')->with('status', 'Account is inactive. Please contact support for assistance.');
             }
         }
-        if (Auth::user()->role->name == "Admin" && $request->loginType== "Admin") {
+
+        if (Auth::check() && Auth::user()->hasRole('Admin') && $request->loginType== "Admin") {
             return redirect()->intended(RouteServiceProvider::HOME);
-        } else if (Auth::user()->role->name == "User" && $request->loginType== "User") {
+        } else if (Auth::check() && Auth::user()->hasRole('User') && $request->loginType== "User") {
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {
-            $role = Auth::user()->role->name;
             // Force logout for the currently authenticated user
             Auth::logout();
 
             // If you want to redirect the user after logout, you can do something like this:
-            if ($role == "Admin") {
+            if (Auth::check() && Auth::user()->hasRole('Admin')) {
                 return redirect('/login')->with('status', 'Invalid Email or Password.');
             } else {
                 return redirect()->intended('/webpanel/login')->with('status', 'Invalid Email or Password.');

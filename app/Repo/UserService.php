@@ -33,21 +33,18 @@ class UserService extends CommonService
 
         $adminQuery = User::query();
         $adminQuery
-            ->Join('roles', 'users.role_id', 'roles.id')
             ->select(
                 'users.id',
                 'users.first_name',
                 'users.last_name',
                 'users.email',
-                'roles.name as role',
                 'users.status',
                 'users.created_at'
             )
             ->where(function ($query) use ($searchValue) {
                 if (!empty($searchValue)) {
                     $query->where('users.first_name', 'LIKE', $searchValue . '%')
-                        ->orWhere('users.email', 'LIKE', $searchValue . '%')
-                        ->orWhere('roles.name', $searchValue);
+                        ->orWhere('users.email', 'LIKE', $searchValue . '%');
                 }
             })
             ->when($role_id != "0" && $role_id != "", function ($statusQuery) use ($role_id) {
@@ -97,7 +94,6 @@ class UserService extends CommonService
             $action = $editButton . $deleteButton;
             $data[] = [
                 "id" => $user->id,
-                "role_id" => $user->role_id,
                 "full_name" => $full_name,
                 "email" => $user->email,
                 "status" => $status,
