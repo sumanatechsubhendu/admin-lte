@@ -5,6 +5,7 @@ import BreezeButton from '@/Components/Button.vue';
 import { Link } from "@inertiajs/inertia-vue3";
 import Swal from 'sweetalert2';
 </script>
+
 <template>
     <Head title="Dashboard" />
 
@@ -26,12 +27,13 @@ import Swal from 'sweetalert2';
                                 Refresh
                             </BreezeButton>
                             <!-- <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Users</li>
-                            </ol> -->
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Users</li>
+                                </ol> -->
                         </div>
                     </div>
-                </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.container-fluid -->
             </section>
 
             <!-- Main content -->
@@ -48,8 +50,8 @@ import Swal from 'sweetalert2';
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body" id="table1">
-                                    <input type="hidden" name="baseUrl" id="baseUrl" v-model="baseUrl"/>
-                                    <input type="hidden" name="token" id="token" v-model="token"/>
+                                    <input type="hidden" name="baseUrl" id="baseUrl" v-model="baseUrl" />
+                                    <input type="hidden" name="token" id="token" v-model="token" />
                                     <table class="table table-bordered table-hover w-full" id="dataTable2">
                                         <thead>
                                             <tr>
@@ -83,6 +85,7 @@ import Swal from 'sweetalert2';
         <!-- /.content-wrapper -->
     </BreezeAuthenticatedLayout>
 </template>
+
 <script>
 import $ from 'jquery';
 
@@ -145,7 +148,7 @@ export default {
                     right: 0
                 },
                 "bStateSave": true,
-                "fnStateSave": function (oSettings, oData) {
+                "fnStateSave": function(oSettings, oData) {
                     localStorage.setItem('offersDataTables', JSON.stringify(oData));
                 },
                 'processing': true,
@@ -155,7 +158,7 @@ export default {
                     "emptyTable": "No Data Found."
                 },
 
-                initComplete: function () {
+                initComplete: function() {
                     $('.dataTable').css('width', '100%');
                     $('#table1').css('width', '100%'); // Set the table width to 100%
                 },
@@ -167,7 +170,7 @@ export default {
                         "end_date": end_date,
                         "start_date": start_date
                     },
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $("#loaderDiv1").show();
                     },
                     complete: (data) => {
@@ -178,19 +181,26 @@ export default {
                         $(".dataTables_paginate .pagination li a").addClass("page-link");
                         $(".dataTables_paginate .pagination li a:first").html('<span aria-hidden="true">«</span>');
                         $(".dataTables_paginate .pagination li a:last").html('<span aria-hidden="true">»</span>');
-                        $('.delete-btn').click(function() {
+                        $('.delete-btn').click(async function() {
                             var userId = $(this).data('id');
                             var baseUrl = $("#baseUrl").val();
                             var token = $("#token").val();
 
                             // Ask for confirmation
-                            const isConfirmed = window.confirm("Are you sure you want to delete this post?");
+                            const result = await Swal.fire({
+                                title: 'Are you sure you want to delete this user?',
+                                text: 'You won\'t be able to revert this!',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Yes, delete it!'
+                            });
 
-                            // If user confirms, proceed with deletion
-                            if (isConfirmed) {
-                               // const apiUrl = baseUrl + '/webpanel/delete-user/'+userId;
-                               // this.$inertia.delete(route("users.destroy", userId));
-                               const apiUrl = route("delete-user", userId);
+                            if (result.isConfirmed) {
+                                // User clicked "Yes, delete it!" button
+                                // Perform the delete logic or call the delete method here
+                                const apiUrl = route("delete-user", userId);
                                 $.ajax({
                                     url: apiUrl,
                                     type: 'GET',
@@ -214,8 +224,8 @@ export default {
                                         Swal.fire('Delete failed');
                                     }
                                 });
-
                             }
+
                         });
                     },
                 },
@@ -227,7 +237,7 @@ export default {
                     { data: 'created_at' },
                     { data: 'action' },
                 ],
-                rowCallback: function (row, data, index) {
+                rowCallback: function(row, data, index) {
 
                     // Add class to the row element
                     $(row).addClass('intro-x rounded');
@@ -237,7 +247,7 @@ export default {
                     // $(row).find('td:eq(1)').addClass('custom-td-class-2');
                     // Add more td classes as needed
                 },
-                createdRow: function (row, data, dataIndex) {
+                createdRow: function(row, data, dataIndex) {
                     // Add class to the row element
                     $(row).addClass('intro-x rounded');
 
@@ -251,13 +261,14 @@ export default {
                 ],
                 "aoColumnDefs": [
                     { "bSortable": false, "aTargets": [2] }
-                ]
-                , oLanguage: { sProcessing: "<div id='loader' class='loading'></div>" }
+                ],
+                oLanguage: { sProcessing: "<div id='loader' class='loading'></div>" }
             });
         }
     },
 };
 </script>
+
 <style>
 #dataTable2 {
     width: 100% !important;
