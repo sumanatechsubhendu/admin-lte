@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -27,7 +29,6 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'role_id' => rand(1,2),
             'status' => rand(0,1),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -43,5 +44,20 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        // Assume you have a 'user' role
+        $role = Role::where('name', 'user')->first();
+
+        return $this->afterCreating(function (User $user) use ($role) {
+            $user->assignRole($role);
+        });
     }
 }

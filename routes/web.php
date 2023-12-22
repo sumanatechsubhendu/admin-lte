@@ -29,6 +29,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
+        dd(Auth::user()->role);
         if (Auth::user()->role->name == "Admin") {
             return Inertia::render('Admin/Dashboard');
         }
