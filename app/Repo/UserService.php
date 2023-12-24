@@ -5,9 +5,33 @@ namespace App\Repo;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use Hash;
 
 class UserService extends CommonService
 {
+
+    public function store(array $data)
+    {
+        return User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'status' => isset($data['status']) ? $data['status'] : true,
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ])->assignRole($data['role_id']);
+    }
+
+    public function update(User $user, array $data)
+    {
+        $user->update([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'status' => $data['status'],
+        ]);
+        $user->assignRole($data['role_id']);
+        return $user;
+    }
 
     public function getAjaxUserList($input)
     {

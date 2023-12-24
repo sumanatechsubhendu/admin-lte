@@ -29,7 +29,7 @@ const submit = () => {
 <template>
     <BreezeGuestLayout>
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+            <a :href="route('home')"><b>Admin</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

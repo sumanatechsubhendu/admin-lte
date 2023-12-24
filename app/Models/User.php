@@ -24,7 +24,6 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'role_id'
     ];
 
     /**
@@ -36,6 +35,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    //protected $appends = ['role'];
 
     /**
      * The attributes that should be cast.

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Repo\CommonService;
 use App\Repo\UserService;
@@ -48,22 +50,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request, UserService $userService)
     {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()]
-        ]);
+        $data = $request->validated();
 
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'status' => isset($request->status) ? $request->status : true,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = $userService->store($data);
+
         return Redirect::route('users.index');
     }
 
@@ -90,6 +82,7 @@ class UserController extends Controller
         $roleList = $useService->getRolesList();
         return Inertia::render('Admin/User/EditUser', [
             'user' => $user,
+            'role' => $user->role,
             'roleList' => $roleList
         ]);
     }
@@ -101,25 +94,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user,  UserService $userService)
     {
        // 'password' => ['sometimes', 'required', 'confirmed', Rules\Password::defaults()],
-        $user->update(
-            $request->validate([
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => [
-                    'required',
-                    'string',
-                    'email',
-                    'max:255',
-                    Rule::unique('users')->ignore($user->id),
-                ],
-                'role_id' => 'required',
-                'status' => 'required',
-            ])
-        );
+       $data = $request->validated();
 
+       $user = $userService->update($user, $data);
 
         return redirect()->route('users.index')
             ->with('success', 'user was updated!');

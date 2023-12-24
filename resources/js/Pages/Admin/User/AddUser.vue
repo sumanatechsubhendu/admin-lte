@@ -107,10 +107,11 @@ const create = () => {
                                             <BreezeLabel for="role_id" value="Role" />
                                             <select id="role_id" v-model="form.role_id" class="mt-1 block w-full" >
                                                 <option value="" disabled>Select Role</option>
-                                                <option v-for="(role, roleId) in props.roleList" :key="roleId" :value="roleId">
+                                                <option v-for="(role, roleId) in props.roleList" :key="roleId" :value="role">
                                                     {{ role }}
                                                 </option>
                                             </select>
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.role_id">{{ form.errors.role_id }}</div>
                                         </div>
 
                                         <div class="flex items-center justify-end mt-4">
