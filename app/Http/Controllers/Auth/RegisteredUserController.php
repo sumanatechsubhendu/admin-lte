@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -50,13 +51,14 @@ class RegisteredUserController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'status' => isset($request->status) ? $request->status : true,
-            'role_id' => isset($request->role_id) ? $request->role_id : 2,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        $role = Role::where('name', 'user')->first();
+        $user->assignRole($role);
 
+        event(new Registered($user));
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);

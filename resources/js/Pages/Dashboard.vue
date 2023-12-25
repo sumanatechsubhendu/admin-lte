@@ -18,7 +18,7 @@ import { Head } from '@inertiajs/inertia-vue3';
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         Welcome! <b>{{ $page.props.auth.user.first_name }} {{ $page.props.auth.user.last_name }}</b>
-                        <br/>You are login as a <b>{{ $page.props.auth.role.name }}</b>
+                        <br/>You are login as a <b>{{ $page.props.auth.role }}</b>
                         <br/>Your Email Id is <b>{{ $page.props.auth.user.email }}</b>
                     </div>
                 </div>

@@ -10,6 +10,7 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 const props = defineProps({
     roleList: Object,
     user: Object,
+    role: String,
     status: String,
 })
 const form = useForm({
@@ -18,7 +19,7 @@ const form = useForm({
     email: props.user.email,
     password: '',
     password_confirmation: '',
-    role_id: props.user.role_id,
+    role_id: props.role,
     status: props.user.status
 });
 
@@ -100,16 +101,18 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
                                                 <option value="1">Active</option>
                                                 <option value="0">Inactive</option>
                                             </select>
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</div>
                                         </div>
 
                                         <div class="mt-4">
                                             <BreezeLabel for="role_id" value="Role" />
                                             <select id="role_id" v-model="form.role_id" class="mt-1 block w-full">
-                                                <option value="" disabled>Select Role</option>
-                                                <option v-for="(role, roleId) in props.roleList" :key="roleId" :value="roleId">
+                                                <option value="">Select Role</option>
+                                                <option v-for="(role, roleId) in props.roleList" :key="roleId" :value="role">
                                                     {{ role }}
                                                 </option>
                                             </select>
+                                            <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.role_id">{{ form.errors.role_id }}</div>
                                         </div>
 
                                         <div class="flex items-center justify-end mt-4">

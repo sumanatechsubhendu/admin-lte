@@ -21,9 +21,8 @@ class UserSeeder extends Seeder
             'last_name' => 'User',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
-            'role_id' => '1',
             'status' => '1',
-        ])->assignRole('admin');
+        ])->assignRole('Admin');
 
         // Create regular user
         User::create([
@@ -31,8 +30,7 @@ class UserSeeder extends Seeder
             'last_name' => 'User',
             'email' => 'user@gmail.com',
             'password' => Hash::make('password'),
-            'role_id' => '2',
             'status' => '1',
-        ])->assignRole('user');
+        ])->assignRole('User');
     }
 }

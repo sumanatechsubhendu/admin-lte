@@ -40,7 +40,7 @@ import { Head } from '@inertiajs/inertia-vue3';
                                 <div class="card-body">
                                     Welcome! <b>{{ $page.props.auth.user.first_name }} {{ $page.props.auth.user.last_name
                                     }}</b>
-                                    <br />You are login as a <b>{{ $page.props.auth.role.name }}</b>
+                                    <br />You are login as a <b>{{ $page.props.auth.role }}</b>
                                     <br />Your Email Id is <b>{{ $page.props.auth.user.email }}</b>
                                 </div>
                                 <!-- /.card-body -->

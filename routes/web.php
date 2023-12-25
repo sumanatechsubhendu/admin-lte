@@ -25,18 +25,18 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        if (Auth::user()->role->name == "Admin") {
+        if (Auth::check() && Auth::user()->hasRole('Admin')) {
             return Inertia::render('Admin/Dashboard');
         }
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
     Route::get('/webpanel/dashboard', function () {
-        if (Auth::user()->role->name == "Admin") {
+        if (Auth::check() && Auth::user()->hasRole('Admin')) {
             return Inertia::render('Admin/Dashboard');
         }
         return Inertia::render('Dashboard');

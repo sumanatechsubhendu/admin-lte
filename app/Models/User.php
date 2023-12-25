@@ -24,7 +24,6 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'role_id'
     ];
 
     /**
@@ -36,6 +35,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    //protected $appends = ['role'];
 
     /**
      * The attributes that should be cast.
@@ -47,14 +47,27 @@ class User extends Authenticatable
     //     'password' => 'hashed',
     // ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
-    public function hasRole($role)
+    // public function hasRole($role)
+    // {
+    //     return $this->role->name === $role;
+    // }
+
+    /**
+     * Accessor to get the roles attribute for a user.
+     *
+     * @return string
+     */
+    public function getRoleAttribute()
     {
-        return $this->role->name === $role;
+        // Assuming a user has only one role (change logic accordingly if multiple roles are possible)
+        $role = $this->roles->first();
+
+        return $role ? $role->name : 'No Role';
     }
 
     public function authorizeRoles($roles)
