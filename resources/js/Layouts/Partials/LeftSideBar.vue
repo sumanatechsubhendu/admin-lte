@@ -1,3 +1,6 @@
+<script setup>
+import { Link } from '@inertiajs/inertia-vue3';
+</script>
 <template>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -61,18 +64,18 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a :href="route('users.index')" class="nav-link">
+                        <Link :href="route('users.index')" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
                             <p>Users</p>
-                        </a>
+                        </Link>
                     </li>
 
 
                     <li class="nav-item">
-                        <a :href="route('users.index')" class="nav-link">
-                                    <i class="fas fa-circle nav-icon"></i>
-                                    <p>Create User</p>
-                                </a>
+                        <Link :href="route('users.create')" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Create User</p>
+                        </Link>
                     </li>
 
                 </ul>

@@ -20,9 +20,11 @@ import Swal from 'sweetalert2';
                             <h1>Users</h1>
                         </div>
                         <div class="col-sm-6 d-flex justify-content-end">
-                            <BreezeButton class="ml-4" @click="create">
-                                Add User
-                            </BreezeButton>
+                            <Link :href="route('users.create')">
+                                <BreezeButton class="ml-4">
+                                    Add User
+                                </BreezeButton>
+                            </Link>
                             <BreezeButton class="ml-4" id="refreshBtn" @click="refresh">
                                 Refresh
                             </BreezeButton>

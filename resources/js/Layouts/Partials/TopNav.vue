@@ -1,6 +1,7 @@
 <script setup>
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
 import BreezeDropdown from '@/Components/Dropdown.vue';
+import { Link } from '@inertiajs/inertia-vue3';
 </script>
 <template>
     <!-- Navbar -->
@@ -11,10 +12,10 @@ import BreezeDropdown from '@/Components/Dropdown.vue';
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a :href="route('webpanel.dashboard')" :active="route().current('webpanel.dashboard')" class="nav-link">Home</a>
+                <Link :href="route('users.create')" :active="route().current('webpanel.dashboard')" class="nav-link">Home</Link>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a :href="route('users.index')" :active="route().current('users.index')" class="nav-link">Users</a>
+                <Link :href="route('users.index')" :active="route().current('users.index')" class="nav-link">Users</Link>
             </li>
         </ul>
 
