@@ -12,7 +12,7 @@ import { Link } from '@inertiajs/inertia-vue3';
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <Link :href="route('users.create')" :active="route().current('webpanel.dashboard')" class="nav-link">Home</Link>
+                <Link :href="route('webpanel.dashboard')" :active="route().current('webpanel.dashboard')" class="nav-link">Home</Link>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <Link :href="route('users.index')" :active="route().current('users.index')" class="nav-link">Users</Link>
