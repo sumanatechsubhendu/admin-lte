@@ -232,11 +232,11 @@ export default {
                     },
                 },
                 'columns': [
-                    { data: 'full_name' },
-                    { data: 'email' },
-                    { data: 'role' },
-                    { data: 'status' },
-                    { data: 'created_at' },
+                    { data: 'first_name' , orderable: true},
+                    { data: 'email' , orderable: true},
+                    { data: 'role'},
+                    { data: 'status'},
+                    { data: 'created_at' , orderable: true},
                     { data: 'action' },
                 ],
                 rowCallback: function(row, data, index) {

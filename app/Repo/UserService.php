@@ -35,14 +35,14 @@ class UserService extends CommonService
 
     public function getAjaxUserList($input)
     {
-        $draw = $input['draw'] ?? null;
-        $row = $input['start'] ?? null;
-        $rowperpage = $input['length'] ?? 10; // Rows display per page
-        $columnIndex = $input['order'][0]['column'] ?? 'id'; // Column index
-        //$columnName = $input['columns'][$columnIndex]['data']; // Column name
-        $columnName = $input['columns'][0]['data'] ?? 'id'; // Column name
-        $columnSortOrder = $input['order'][0]['dir'] ?? 'asc'; // asc or desc
-        $searchValue = $input['search']['value'] ?? null; // Search value
+        $draw = $input['draw'];
+        $row = $input['start'];
+        $rowperpage = $input['length']; // Rows display per page
+        $columnIndex = $input['order'][0]['column']; // Column index
+        $columnName = $input['columns'][$columnIndex]['data']; // Column name
+       // $columnName = $input['columns'][0]['data']; // Column name
+        $columnSortOrder = $input['order'][0]['dir']; // asc or desc
+        $searchValue = $input['search']['value']; // Search value
         $user_status = [
             0 => 'deleted',
             1 => 'unverified',
@@ -50,9 +50,10 @@ class UserService extends CommonService
             3 => 'Login Blocked'
         ];
         ## Search
-        if ($columnName != 'full_name') {
-            $columnName = 'full_name';
-        }
+        // if ($columnName != 'id') {
+        //     $columnName = 'id';
+        // }
+
         $role_id = $input['role_id'] ?? null;
 
         $adminQuery = User::query();
@@ -74,10 +75,9 @@ class UserService extends CommonService
             ->when($role_id != "0" && $role_id != "", function ($statusQuery) use ($role_id) {
                 return $statusQuery->where('users.role_id', $role_id);
             });
-
+        //->orderByRaw('status = 1 desc')
         $query = $adminQuery
-            ->orderByRaw('status = 1 desc')
-            ->orderBy('id', 'desc');
+            ->orderBy($columnName, $columnSortOrder);
         $count = $query->count();
         $results = $query
             ->limit($rowperpage)
@@ -121,7 +121,7 @@ class UserService extends CommonService
             $action = $editButton . $deleteButton;
             $data[] = [
                 "id" => $user->id,
-                "full_name" => $full_name,
+                "first_name" => $full_name,
                 "email" => $user->email,
                 "status" => $status,
                 "role" => $user->role,
