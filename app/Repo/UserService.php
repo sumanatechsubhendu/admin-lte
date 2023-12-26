@@ -105,6 +105,9 @@ class UserService extends CommonService
             $editButton = '<a href="' . $editUrl . '" class="btn btn-warning btn-sm">
                 <i class="fas fa-pencil" title="Edit"></i>
             </a>&nbsp;';
+            // $editButton = '<button data-id="' . $user->id . '" class="btn btn-warning btn-sm edit-btn">
+            //     <i class="fas fa-pencil" title="Edit"></i>
+            // </button>&nbsp;';
             // Delete button
             $deleteButton = '<button data-id="' . $user->id . '" class="btn btn-danger btn-sm delete-btn">
                 <i class="fas fa-trash" title="Delete"></i>
