@@ -2,6 +2,7 @@
 import BreezeAuthenticatedLayout from '@/Layouts/AdminLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import Form from "@/Pages/Admin/User/Partials/Form.vue";
+import BreezeButton from '@/Components/Button.vue';
 
 const props = defineProps({
     roleList: Object,
@@ -34,6 +35,13 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1>Edit Users</h1>
+                        </div>
+                        <div class="col-sm-6  flex items-center justify-end">
+                            <Link :href="route('users.index')">
+                                <BreezeButton class="ml-4">
+                                    Go Back
+                                </BreezeButton>
+                            </Link>
                         </div>
                     </div>
                 </div>
