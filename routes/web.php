@@ -49,7 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('posts', PostController::class);
     Route::resource('listing', ListingController::class);
-    Route::post('/user-list', [UserController::class, 'getUserList']);
+    Route::get('/user-list', [UserController::class, 'getUserList']);
 
 });
 

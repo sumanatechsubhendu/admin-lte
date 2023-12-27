@@ -155,7 +155,7 @@ export default {
                 },
                 'processing': true,
                 'serverSide': true,
-                'serverMethod': 'post',
+                'serverMethod': 'get',
                 'language': {
                     "emptyTable": "No Data Found."
                 },
