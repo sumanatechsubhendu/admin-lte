@@ -3,6 +3,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/AdminLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import Form from "@/Pages/Admin/User/Partials/Form.vue";
 import BreezeButton from '@/Components/Button.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     roleList: Object,
@@ -14,7 +15,7 @@ const userForm = useForm({
     password: '',
     password_confirmation: '',
     role_id: '',
-    status: '0'
+    status: ref(0)
 });
 
 const create = () => {
@@ -57,11 +58,6 @@ const create = () => {
                         <div class="col-12">
                             <div class="card">
                                 <!-- /.card-header -->
-                                <div class="card-header">
-                                    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-                                        {{ status }}
-                                    </div>
-                                </div>
                                 <div class="card-body" id="table1">
                                     <Form :form="userForm" :roleList=props.roleList @submit="create" />
                                 </div>

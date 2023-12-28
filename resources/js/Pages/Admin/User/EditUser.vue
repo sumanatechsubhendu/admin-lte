@@ -8,7 +8,6 @@ const props = defineProps({
     roleList: Object,
     user: Object,
     role: String,
-    status: String,
 })
 const form = useForm({
     first_name: props.user.first_name,
@@ -56,13 +55,8 @@ const update = () => form.put(route('users.update', { user: props.user.id }))
                         <div class="col-12">
                             <div class="card">
                                 <!-- /.card-header -->
-                                <div class="card-header">
-                                    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-                                        {{ status }}
-                                    </div>
-                                </div>
                                 <div class="card-body" id="table1">
-                                    <Form :form="form" :roleList=props.roleList :user=props.user :role=props.role :status=props.status @submit="update" />
+                                    <Form :form="form" :roleList=props.roleList :user=props.user :role=props.role @submit="update" />
                                 </div>
                                 <!-- /.card-body -->
                             </div>
