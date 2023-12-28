@@ -45,10 +45,10 @@ import Swal from 'sweetalert2';
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">List of all users {{ status }}</h3>
-                                    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-                                        {{ status }}
-                                    </div>
+                                    <h3 class="card-title">List of all users</h3>
+                                </div>
+                                <div v-if="status" class="alert alert-success" role="alert">
+                                    {{ status }}
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body" id="table1">

@@ -24,9 +24,11 @@ class UserController extends Controller
     public function index()
     {
         $token = csrf_token();
+        $successMessage = session('success');
 
         return Inertia::render('Admin/User/Index', [
-            'token' => $token
+            'token' => $token,
+            'status' => $successMessage
         ]);
     }
 
@@ -56,7 +58,9 @@ class UserController extends Controller
 
         $user = $userService->store($data);
 
-        return Redirect::route('users.index');
+        //return Redirect::route('users.index');
+        return redirect()->route('users.index')
+            ->with('success', 'User added successfully.');
     }
 
     /**
@@ -102,7 +106,7 @@ class UserController extends Controller
        $user = $userService->update($user, $data);
 
         return redirect()->route('users.index')
-            ->with('success', 'user was updated!');
+            ->with('success', 'User updated successfully.');
     }
 
     /**
