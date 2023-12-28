@@ -44,7 +44,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('webpanel')->middleware(['role:Admin'])->group(function () {
         Route::resource('users', UserController::class);
-        Route::get('delete-user/{user}', [UserController::class, 'deleteUser'])->name('delete-user');
     });
 
     Route::resource('posts', PostController::class);
