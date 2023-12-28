@@ -5,14 +5,19 @@ import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import Form from "@/Pages/Admin/User/Partials/Form.vue";
+import { ref } from 'vue';
 
 const props = defineProps({
     roleList: Object,
     user: Object,
     role: String,
-    status: String,
     form: Object,
-})
+});
+
+const status_options = ref([
+  { text: 'Active', value: '1' },
+  { text: 'Inactive', value: '0' }
+]);
 
 const emit = defineEmits(['submit'])
 
@@ -55,8 +60,9 @@ const create = () => {
         <div class="mt-4">
             <BreezeLabel for="status" value="Status" />
             <select id="status" v-model="form.status" class="mt-1 block w-full">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
+                <option v-for="option in status_options" :value="option.value">
+                    {{ option.text }}
+                </option>
             </select>
             <div class="mb-4 font-medium text-sm text-red-600" v-if="form.errors.status">{{ form.errors.status }}</div>
         </div>
