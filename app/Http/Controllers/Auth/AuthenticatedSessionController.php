@@ -52,7 +52,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         if (Auth::check() && Auth::user()->hasRole('Admin') && $request->loginType== "Admin") {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
         } else if (Auth::check() && Auth::user()->hasRole('User') && $request->loginType== "User") {
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {
