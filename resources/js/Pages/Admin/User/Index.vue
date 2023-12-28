@@ -202,10 +202,10 @@ export default {
                             if (result.isConfirmed) {
                                 // User clicked "Yes, delete it!" button
                                 // Perform the delete logic or call the delete method here
-                                const apiUrl = route("delete-user", userId);
+                                const apiUrl = route("users.destroy", userId);
                                 $.ajax({
                                     url: apiUrl,
-                                    type: 'GET',
+                                    type: 'DELETE',
                                     data: {
                                         _token: token
                                     },

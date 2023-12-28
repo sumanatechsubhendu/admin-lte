@@ -113,20 +113,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-
-        return Redirect::route('users.index');
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function deleteUser(User $user)
-    {
         if ($user) {
             $user->delete();
 
@@ -141,7 +127,6 @@ class UserController extends Controller
                 'msg' => 'User not deleted..',
             ];
         }
-
     }
 
     public function getUserList(Request $request)
