@@ -23,11 +23,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $token = csrf_token();
         $successMessage = session('success');
 
         return Inertia::render('Admin/User/Index', [
-            'token' => $token,
             'status' => $successMessage
         ]);
     }
