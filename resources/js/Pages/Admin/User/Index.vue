@@ -240,7 +240,16 @@ export default {
                     { data: 'first_name' , orderable: true},
                     { data: 'email' , orderable: true},
                     { data: 'role'},
-                    { data: 'status'},
+                    {
+                        data: 'status',
+                        render: function (status, type, row) {
+                            if (status) {
+                                return '<span class="badge badge-primary" data-id="' + row.id + '">Active</span>';
+                            } else {
+                                return '<span class="badge badge-warning" data-id="' + row.id + '">In Active</span>';
+                            }
+                        }
+                    },
                     { data: 'created_at' , orderable: true},
 
                     {
@@ -252,6 +261,7 @@ export default {
                                 '<button class="btn btn-danger delete-btn ml-1" data-id="' + data + '">Delete</button>';
                         }
                     },
+
                 ],
                 rowCallback: function(row, data, index) {
 

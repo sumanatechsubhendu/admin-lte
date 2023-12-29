@@ -5,6 +5,7 @@ namespace App\Repo;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use DB;
 use Hash;
 
 class UserService extends CommonService
@@ -62,11 +63,10 @@ class UserService extends CommonService
         $adminQuery
             ->select(
                 'users.id',
-                'users.first_name',
-                'users.last_name',
+                DB::raw('CONCAT(users.first_name, " ", users.last_name) as full_name'),
                 'users.email',
                 'users.status',
-                'users.created_at'
+                DB::raw('DATE_FORMAT(users.created_at, "%Y-%m-%d") as formated_created_at')
             )
             ->where(function ($query) use ($searchValue) {
                 if (!empty($searchValue)) {
@@ -88,24 +88,13 @@ class UserService extends CommonService
         $data = array();
 
         foreach ($results as $key => $user) {
-
-            if ($user->status) {
-                //$status = "<i class=\"fas fa-times-circle color-green\"></i>";
-                $status = "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\">
-                Active</button>";
-                $status = "<span class=\"badge badge-primary\">Active</span>";
-            } else {
-                //$status = "<i class=\"fas fa-check-circle color-green\"></i>";
-                $status = "<span class=\"badge badge-warning\">In Active</span>";
-            }
-            $full_name = $user->first_name . ' ' . $user->last_name;
             $data[] = [
                 "id" => $user->id,
-                "first_name" => $full_name,
+                "first_name" => $user->full_name,
                 "email" => $user->email,
-                "status" => $status,
+                "status" => $user->status,
                 "role" => $user->role,
-                "created_at" => Carbon::parse($user->created_at)->timezone('Asia/Kolkata')->format('Y-m-d'),
+                "created_at" => $user->formated_created_at,
             ];
         }
         $response = array(
