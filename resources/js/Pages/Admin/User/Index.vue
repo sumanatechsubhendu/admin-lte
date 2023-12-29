@@ -229,7 +229,7 @@ export default {
                             }
 
                         });
-                        $('.view-btn, .edit-btn').click(async function() {
+                        $('.view-btn').click(async function() {
                             var userId = $(this).data('id');
                             const editUserUrl = route("users.edit", userId);
                             window.location.href = editUserUrl;
@@ -255,9 +255,10 @@ export default {
                     {
                         data: 'id', // Assuming 'id' is the unique identifier for each row
                         render: function (data, type, row) {
+                            const editUserUrl = route("users.edit", data);
                             // Use data, type, row to customize the rendering based on your needs
                             return '<button class="btn btn-info view-btn" @click="view(' + data + ')" data-id="' + data + '">View</button>' +
-                                '<button class="btn btn-warning edit-btn ml-1" data-id="' + data + '">Edit</button>' +
+                                '<a href="' + editUserUrl + '"><button class="btn btn-warning edit-btn ml-1" data-id="' + data + '">Edit</button></a>' +
                                 '<button class="btn btn-danger delete-btn ml-1" data-id="' + data + '">Delete</button>';
                         }
                     },
