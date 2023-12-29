@@ -229,6 +229,11 @@ export default {
                             }
 
                         });
+                        $('.view-btn, .edit-btn').click(async function() {
+                            var userId = $(this).data('id');
+                            const editUserUrl = route("users.edit", userId);
+                            window.location.href = editUserUrl;
+                        });
                     },
                 },
                 'columns': [
@@ -237,7 +242,16 @@ export default {
                     { data: 'role'},
                     { data: 'status'},
                     { data: 'created_at' , orderable: true},
-                    { data: 'action' },
+
+                    {
+                        data: 'id', // Assuming 'id' is the unique identifier for each row
+                        render: function (data, type, row) {
+                            // Use data, type, row to customize the rendering based on your needs
+                            return '<button class="btn btn-info view-btn" @click="view(' + data + ')" data-id="' + data + '">View</button>' +
+                                '<button class="btn btn-warning edit-btn ml-1" data-id="' + data + '">Edit</button>' +
+                                '<button class="btn btn-danger delete-btn ml-1" data-id="' + data + '">Delete</button>';
+                        }
+                    },
                 ],
                 rowCallback: function(row, data, index) {
 
