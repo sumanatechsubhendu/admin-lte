@@ -98,29 +98,7 @@ class UserService extends CommonService
                 //$status = "<i class=\"fas fa-check-circle color-green\"></i>";
                 $status = "<span class=\"badge badge-warning\">In Active</span>";
             }
-
-
             $full_name = $user->first_name . ' ' . $user->last_name;
-
-
-            $editUrl = route('users.edit', [$user->id]);
-            $editButton = '<a href="' . $editUrl . '" class="btn btn-warning btn-sm">
-                <i class="fas fa-pencil" title="Edit"></i>
-            </a>&nbsp;';
-            // $editButton = '<button data-id="' . $user->id . '" class="btn btn-warning btn-sm edit-btn">
-            //     <i class="fas fa-pencil" title="Edit"></i>
-            // </button>&nbsp;';
-            // Delete button
-            $deleteButton = '<button data-id="' . $user->id . '" class="btn btn-danger btn-sm delete-btn">
-                <i class="fas fa-trash" title="Delete"></i>
-            </button>';
-           /* $deleteUrl = route('delete-user', [$user->id]);
-            $deleteButton = '<a href="' . $deleteUrl . '"><button class="btn btn-danger btn-sm">
-                <i class="fas fa-trash" title="Delete"></i>
-            </button></a>';*/
-
-            // Output
-            $action = $editButton . $deleteButton;
             $data[] = [
                 "id" => $user->id,
                 "first_name" => $full_name,
@@ -128,7 +106,6 @@ class UserService extends CommonService
                 "status" => $status,
                 "role" => $user->role,
                 "created_at" => Carbon::parse($user->created_at)->timezone('Asia/Kolkata')->format('Y-m-d'),
-                "action" => $action,
             ];
         }
         $response = array(
