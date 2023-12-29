@@ -94,13 +94,13 @@ import $ from 'jquery';
 export default {
     props: {
         users: Array,
-        token: String,
         status: String,
     },
     data() {
         return {
             apiData: {},
             baseUrl: window.location.origin,
+            token: this.$page.props.auth.token,
         };
     },
     mounted() {
