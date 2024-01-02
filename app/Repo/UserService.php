@@ -74,6 +74,7 @@ class UserService extends CommonService
             ->where(function ($query) use ($searchValue) {
                 if (!empty($searchValue)) {
                     $query->where('users.first_name', 'LIKE', $searchValue . '%')
+                        ->orWhere('users.last_name', 'LIKE', $searchValue . '%')
                         ->orWhere('users.email', 'LIKE', $searchValue . '%');
                 }
             })

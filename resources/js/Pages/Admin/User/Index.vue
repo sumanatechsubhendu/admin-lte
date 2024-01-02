@@ -2,8 +2,19 @@
 import BreezeAuthenticatedLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from "@inertiajs/inertia-vue3";
 import BreezeButton from '@/Components/Button.vue';
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from '@inertiajs/inertia-vue3';
 import Swal from 'sweetalert2';
+import UserProfile from "@/Pages/Admin/User/Partials/UserProfile.vue";
+
+const userForm = useForm({
+    id: null,
+    full_name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    role: '',
+    status: ''
+});
 </script>
 
 <template>
@@ -28,10 +39,12 @@ import Swal from 'sweetalert2';
                             <BreezeButton class="ml-4" id="refreshBtn" @click="refresh">
                                 Refresh
                             </BreezeButton>
-                            <!-- <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active">Users</li>
-                                </ol> -->
+                            <button type="button"
+                            class="btn btn-primary d-none"
+                            id="openModal"
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            data-whatever="@mdo">Open modal</button>
                         </div>
                     </div>
                 </div>
@@ -83,6 +96,9 @@ import Swal from 'sweetalert2';
                 <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
+            <UserProfile
+                :user="userForm"
+            />
         </div>
         <!-- /.content-wrapper -->
     </BreezeAuthenticatedLayout>
@@ -229,10 +245,17 @@ export default {
                             }
 
                         });
+                        var that = this;
                         $('.view-btn').click(async function() {
-                            var userId = $(this).data('id');
-                            const editUserUrl = route("users.edit", userId);
-                            window.location.href = editUserUrl;
+                            var userObjString = decodeURIComponent($(this).data('user-obj'));
+                            var userObj = JSON.parse(userObjString);
+                            that.userForm.id=userObj.id;
+                            that.userForm.full_name=userObj.full_name;
+                            that.userForm.email=userObj.email;
+                            that.userForm.role=userObj.role;
+                            that.userForm.status=userObj.status;
+                            that.userForm.created_at=userObj.created_at;
+                            $("#openModal").click();
                         });
                     },
                 },
@@ -256,10 +279,18 @@ export default {
                         data: 'id', // Assuming 'id' is the unique identifier for each row
                         render: function (data, type, row) {
                             const editUserUrl = route("users.edit", data);
+                            var userObj = {
+                                id: row.id,
+                                full_name: row.first_name,
+                                email: row.email,
+                                role: row.role,
+                                status: row.status,
+                                created_at: row.created_at
+                            };
                             // Use data, type, row to customize the rendering based on your needs
-                            return '<button class="btn btn-info view-btn" @click="view(' + data + ')" data-id="' + data + '">View</button>' +
-                                '<a href="' + editUserUrl + '"><button class="btn btn-warning edit-btn ml-1" data-id="' + data + '">Edit</button></a>' +
-                                '<button class="btn btn-danger delete-btn ml-1" data-id="' + data + '">Delete</button>';
+                    return `<button class="btn btn-info view-btn" data-user-obj='${encodeURIComponent(JSON.stringify(userObj))}'>View</button>
+        <a href="${editUserUrl}"><button class="btn btn-warning edit-btn ml-1" data-id="${data}">Edit</button></a>
+        <button class="btn btn-danger delete-btn ml-1" data-id="${data}">Delete</button>`;
                         }
                     },
 
