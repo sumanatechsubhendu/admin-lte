@@ -31,8 +31,11 @@ class UserService extends CommonService
             'status' => $data['status'],
         ]);
         // Revoke the current role (replace 'old_role' with the actual role name)
-        $user->removeRole($user->role);
+        //$user->removeRole($user->role);
+        $user->roles()->detach();
         $user->assignRole($data['role_id']);
+       // $user->roles()->sync($data['role_id']);
+        //$user->syncRoles([$user->role, $data['role_id']]);
         return $user;
     }
 

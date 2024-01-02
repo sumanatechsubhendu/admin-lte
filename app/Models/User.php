@@ -67,7 +67,7 @@ class User extends Authenticatable
         // Assuming a user has only one role (change logic accordingly if multiple roles are possible)
         $role = $this->roles->first();
 
-        return $role ? $role->name : 'No Role';
+        return $role ? $role->name : null;
     }
 
     public function authorizeRoles($roles)
