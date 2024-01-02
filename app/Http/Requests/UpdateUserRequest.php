@@ -24,8 +24,12 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($this->route('user')),
             ],
-            'role_id' => 'required',
             'status' => 'required',
+            'role' => [
+                'required',
+                'string',
+                Rule::in(['Admin', 'SubAdmin', 'User']), // Replace with your valid role options
+            ],
         ];
     }
 }

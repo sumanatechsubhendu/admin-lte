@@ -31,8 +31,10 @@ class UserService extends CommonService
             'status' => $data['status'],
         ]);
         // Revoke the current role (replace 'old_role' with the actual role name)
-        $user->removeRole($user->role);
-        $user->assignRole($data['role_id']);
+        if ($user->role) {
+            $user->removeRole($user->role);
+        }
+        $user->assignRole($data['role']);
         return $user;
     }
 
@@ -63,6 +65,8 @@ class UserService extends CommonService
         $adminQuery
             ->select(
                 'users.id',
+                'users.first_name',
+                'users.last_name',
                 DB::raw('CONCAT(users.first_name, " ", users.last_name) as full_name'),
                 'users.email',
                 'users.status',
@@ -91,6 +95,8 @@ class UserService extends CommonService
             $data[] = [
                 "id" => $user->id,
                 "first_name" => $user->full_name,
+                "f_name" => $user->first_name,
+                "l_name" => $user->last_name,
                 "email" => $user->email,
                 "status" => $user->status,
                 "role" => $user->role,

@@ -25,8 +25,11 @@ class UserController extends Controller
     {
         $successMessage = session('success');
 
+        $useService = new CommonService();
+        $roleList = $useService->getRolesList();
         return Inertia::render('Admin/User/Index', [
-            'status' => $successMessage
+            'status' => $successMessage,
+            'roleList' => $roleList
         ]);
     }
 
@@ -100,11 +103,23 @@ class UserController extends Controller
     {
        // 'password' => ['sometimes', 'required', 'confirmed', Rules\Password::defaults()],
        $data = $request->validated();
-
        $user = $userService->update($user, $data);
 
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully.');
+        // return redirect()->route('users.index')
+        //     ->with('success', 'User updated successfully.');
+        // return [
+        //     'status' => 'success',
+        //     'response' => $user,
+        //     'msg' => 'User deleted successfully.',
+        // ];
+        $useService = new CommonService();
+        $roleList = $useService->getRolesList();
+        return Inertia::render('Admin/User/Index', [
+            'status' => 'success',
+            'response' => $user,
+            'msg' => 'User deleted successfully.',
+            'roleList' => $roleList
+        ]);
     }
 
     /**
